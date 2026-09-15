@@ -1,0 +1,15 @@
+<Application x:Class="UltraYoutubeDownloader.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Dark je podrazumevana tema. MainWindow.ApplyTheme() menja ovaj
+                     rečnik u runtime-u za Contrast/Light — isti princip kao u
+                     UltraVideoEditor-u, radi konzistentnog ponašanja kroz Ultra suite. -->
+                <ResourceDictionary Source="Themes/Theme.Dark.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

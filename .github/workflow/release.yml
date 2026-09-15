@@ -1,0 +1,52 @@
+name: Release
+
+# Pokreće se kada gurneš tag u obliku v1.0.0, v1.2.3 itd.
+# (u GitHub Desktopu: History -> desni klik na commit -> Create Tag,
+#  pa Push origin da tag ode na GitHub i pokrene ovaj workflow)
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore UltraYoutubeDownloader.csproj
+
+      - name: Publish (self-contained, single-file, win-x64)
+        run: >
+          dotnet publish UltraYoutubeDownloader.csproj
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true
+          -p:DebugType=none
+          -o publish
+
+      - name: Build installer (Inno Setup)
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: installer/UltraYoutubeDownloader.iss
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Output/UltraYoutubeDownloader-Setup.exe
+          name: Ultra YouTube Downloader ${{ github.ref_name }}
+          generate_release_notes: true

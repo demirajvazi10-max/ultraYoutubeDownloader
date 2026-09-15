@@ -1,0 +1,12 @@
+## .NET / WPF
+bin/
+obj/
+*.user
+
+## Visual Studio
+.vs/
+
+## Runtime-downloaded tools (auto-installed on first run, not committed)
+Ffmpeg/
+yt-dlp.exe
+theme.cfg

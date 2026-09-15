@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AssemblyName>UltraYoutubeDownloader</AssemblyName>
+		<RootNamespace>UltraYoutubeDownloader</RootNamespace>
+		<!-- Isto mesto kao u UltraVideoEditor.csproj — jedino koje treba promeniti
+		     pre svakog GitHub release-a/tag-a. MainWindow.xaml.cs -> GetAppVersion()
+		     čita ovu vrednost u runtime-u za naslov prozora i About dijalog. -->
+		<Version>1.0.0</Version>
+		<Authors>Demir Ajvazi</Authors>
+		<Company>Demir Ajvazi</Company>
+		<Product>Ultra YouTube Downloader</Product>
+		<Copyright>© Demir Ajvazi</Copyright>
+	</PropertyGroup>
+
+</Project>
