@@ -23,10 +23,15 @@ A small WPF desktop app (.NET 8) that downloads a video or audio track from a Yo
 | yt-dlp | Auto-downloaded on first use if missing |
 | FFmpeg | Auto-downloaded on first use if missing (required for MP3 conversion and video/audio merging) |
 
-## Build
+## Download
+
+Ready-to-run builds are published under [Releases](https://github.com/demirajvazi10-max/ultraYoutubeDownloader/releases) — download the installer from the latest `v*` release and run it. No separate .NET install needed (self-contained build).
+
+## Build from source
 
 ```bash
-cd UltraYoutubeDownloader
+git clone https://github.com/demirajvazi10-max/ultraYoutubeDownloader.git
+cd ultraYoutubeDownloader
 dotnet build -c Release
 ```
 
@@ -35,16 +40,16 @@ Or open `UltraYoutubeDownloader.slnx` in Visual Studio.
 ## Accessibility
 
 - Every control has an explicit `AutomationProperties.Name`; status and progress use `LiveSetting="Polite"` so JAWS/NVDA announce updates without needing focus to move.
-- **View menu**: Dark / Light / High-contrast theme, and text/control size (also `Ctrl +` / `Ctrl -` / `Ctrl 0`).
-- On startup, the app checks for an active screen reader and switches to the high-contrast theme automatically (JAWS, NVDA, Narrator, ZoomText, Fusion, Dolphin/Supernova). This can always be overridden from the View menu, and the last chosen theme is remembered for next time.
+- **View menu**: Dark / Light / High-contrast theme, text/control size (also `Ctrl +` / `Ctrl -` / `Ctrl 0`), and **Language** (English / Serbian).
+- On startup, the app checks for an active screen reader and switches to the high-contrast theme automatically (JAWS, NVDA, Narrator, ZoomText, Fusion, Dolphin/Supernova). This can always be overridden from the View menu, and the last chosen theme and language are remembered for next time.
 - A global error handler shows unexpected errors instead of letting the app close silently — important for a blind user, who otherwise gets no signal at all that something went wrong.
 
 ---
 
 ## Author
 
-Created by **Demir Ajvazi**.
+Created by **Demir Ajvazi** — part of the [Ultra Creative Suite](https://github.com/demirajvazi10-max/Ultra-Creative-suite).
 
 ## License
 
-Private project. All rights reserved.
+GPL-3.0 License — see the [LICENSE](./LICENSE) file.
