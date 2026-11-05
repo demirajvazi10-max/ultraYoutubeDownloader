@@ -3,332 +3,286 @@ using System.Collections.Generic;
 namespace UltraYoutubeDownloader
 {
     /// <summary>
-    /// Prevodi za UI. Isti obrazac kao UltraVideoEditor.LanguageManager (GetText(key, language)),
-    /// samo sa manjim skupom ključeva — dovoljno za ovu jednu, namensku aplikaciju.
-    /// Srpski je uvek na latinici (nikad ćirilica).
+    /// Prevodi za UI: ključ -> (engleski, srpski). Srpski je uvek latinicom.
+    /// Engleski je podrazumevani jezik; srpski se bira iz menija Prikaz > Jezik.
     /// </summary>
     public static class LanguageManager
     {
-        private static readonly Dictionary<string, Dictionary<string, string>> _translations;
-
-        static LanguageManager()
+        private static readonly Dictionary<string, (string en, string sr)> T = new()
         {
-            _translations = new Dictionary<string, Dictionary<string, string>>();
+            ["window_title"] = ("Ultra YouTube Downloader", "Ultra YouTube Downloader"),
+            ["window_aria"] = ("Ultra YouTube Downloader — download video or audio from YouTube and 1000+ other sites", "Ultra YouTube Downloader — preuzimanje videa ili zvuka sa YouTube-a i još preko 1000 sajtova"),
+            ["app_subtitle"] = ("Video or audio from YouTube, TikTok, Instagram, Facebook, X, Vimeo, SoundCloud and 1000+ other sites. Paste one link or many.", "Video ili zvuk sa YouTube-a, TikTok-a, Instagrama, Facebooka, X-a, Vimea, SoundClouda i još preko 1000 sajtova. Nalepi jedan link ili više njih."),
+            ["status_by"] = ("by Demir Ajvazi", "autor: Demir Ajvazi"),
 
-            // ==================== ENGLESKI (podrazumevani) ====================
-            var en = new Dictionary<string, string>();
+            // Meni
+            ["menu_file"] = ("_File", "_Fajl"),
+            ["menu_paste_links"] = ("_Add links from clipboard", "_Dodaj linkove iz klipborda"),
+            ["menu_import_links"] = ("_Import links from a text file...", "_Uvezi linkove iz tekstualnog fajla..."),
+            ["menu_exit"] = ("E_xit", "I_zlaz"),
+            ["menu_view"] = ("_View", "_Prikaz"),
+            ["menu_theme"] = ("_Theme", "_Tema"),
+            ["theme_dark"] = ("_Dark (default)", "_Tamna (podrazumevana)"),
+            ["theme_light"] = ("_Light", "_Svetla"),
+            ["theme_contrast"] = ("_High contrast", "_Visok kontrast"),
+            ["theme_dark_plain"] = ("Dark", "Tamna"),
+            ["theme_light_plain"] = ("Light", "Svetla"),
+            ["theme_contrast_plain"] = ("High contrast", "Visok kontrast"),
+            ["menu_textsize"] = ("Text _size", "_Veličina teksta"),
+            ["text_larger"] = ("_Larger text", "_Veći tekst"),
+            ["text_smaller"] = ("_Smaller text", "_Manji tekst"),
+            ["text_reset"] = ("_Reset text size", "_Podrazumevana veličina"),
+            ["menu_language"] = ("_Language", "_Jezik"),
+            ["lang_en"] = ("_English", "_English (engleski)"),
+            ["lang_sr"] = ("_Serbian (Srpski)", "_Srpski"),
+            ["menu_open_folder"] = ("_Open destination folder", "_Otvori folder za preuzimanje"),
+            ["menu_tools"] = ("_Tools", "_Alatke"),
+            ["menu_settings"] = ("_Settings...", "_Podešavanja..."),
+            ["menu_update_ytdlp"] = ("_Update yt-dlp (fixes most download errors)", "_Ažuriraj yt-dlp (rešava većinu grešaka)"),
+            ["menu_install_deno"] = ("Install _Deno (for reliable YouTube downloads)", "Instaliraj _Deno (za pouzdano preuzimanje sa YouTube-a)"),
+            ["menu_help"] = ("_Help", "P_omoć"),
+            ["menu_shortcuts"] = ("_Keyboard shortcuts", "_Prečice tastature"),
+            ["menu_sites"] = ("_Supported sites (web page)", "_Podržani sajtovi (veb stranica)"),
+            ["menu_about"] = ("_About", "_O programu"),
 
-            en["window_title"]      = "Ultra YouTube Downloader";
-            en["window_aria"]       = "Ultra YouTube Downloader — download video or audio from YouTube";
-            en["app_subtitle"]      = "Download video (MP4) or audio (MP3) from a YouTube link.";
-            en["status_by"]         = "by Demir Ajvazi";
+            // Linkovi
+            ["url_label"] = ("_Links (one or more — Enter adds them to the list, Shift+Enter starts a new line):", "_Linkovi (jedan ili više — Enter ih dodaje u listu, Shift+Enter novi red):"),
+            ["url_aria"] = ("Links to download", "Linkovi za preuzimanje"),
+            ["url_help"] = ("Paste one link or many; any text containing links works. Enter adds them to the download list.", "Nalepi jedan ili više linkova; može i ceo tekst u kome su linkovi. Enter ih dodaje u listu za preuzimanje."),
+            ["btn_add"] = ("A_dd to list", "_Dodaj u listu"),
+            ["err_no_links"] = ("No links found. Paste a link that starts with http.", "Nema linkova. Nalepi link koji počinje sa http."),
+            ["added_one"] = ("Added to the list as {1}: {0}", "Dodato u listu kao {1}: {0}"),
+            ["added_many"] = ("{0} links added to the list as {1}.", "Dodato {0} linkova u listu kao {1}."),
+            ["import_filter"] = ("Text files|*.txt;*.csv;*.html;*.htm|All files|*.*", "Tekstualni fajlovi|*.txt;*.csv;*.html;*.htm|Svi fajlovi|*.*"),
 
-            en["menu_view"]         = "_View";
-            en["menu_theme"]        = "Theme";
-            en["theme_dark"]        = "_Dark (default)";
-            en["theme_light"]       = "_Light";
-            en["theme_contrast"]    = "_High contrast";
-            en["theme_dark_plain"]     = "Dark";
-            en["theme_light_plain"]    = "Light";
-            en["theme_contrast_plain"] = "High contrast";
-            en["menu_textsize"]     = "Text size";
-            en["text_larger"]       = "_Larger text (Ctrl +)";
-            en["text_smaller"]      = "_Smaller text (Ctrl -)";
-            en["text_reset"]        = "_Reset text size (Ctrl 0)";
-            en["menu_language"]     = "_Language";
-            en["lang_en"]           = "_English";
-            en["lang_sr"]           = "_Serbian (Srpski)";
-            en["menu_open_folder"]  = "_Open destination folder";
-            en["menu_help"]         = "_Help";
-            en["menu_about"]        = "_About Ultra YouTube Downloader";
-            en["menu_view_aria"]    = "View menu";
-            en["menu_help_aria"]    = "Help menu";
-            en["menu_language_aria"]= "Language menu";
-            en["larger_text_aria"]  = "Increase text and control size";
-            en["smaller_text_aria"] = "Decrease text and control size";
-            en["reset_text_aria"]   = "Reset text and control size to default";
-            en["open_folder_menu_aria"] = "Open the destination folder in File Explorer";
-            en["about_aria"]        = "About Ultra YouTube Downloader";
-            en["theme_dark_aria"]      = "Dark theme";
-            en["theme_light_aria"]     = "Light theme";
-            en["theme_contrast_aria"]  = "High contrast theme";
-            en["lang_en_aria"]      = "Switch language to English";
-            en["lang_sr_aria"]      = "Switch language to Serbian";
+            // Podrazumevano
+            ["defaults_group"] = ("Format and folder — remembered", "Format i folder — pamte se"),
+            ["defaults_hint"] = ("Choose once: every new link uses these until you change them, even after restarting the app.", "Izaberi jednom: svaki novi link koristi ovo dok ne promeniš, i posle ponovnog pokretanja programa."),
+            ["type_label"] = ("Type:", "Vrsta:"),
+            ["video_option"] = ("Video", "Video"),
+            ["audio_option"] = ("Audio only", "Samo zvuk"),
+            ["quality_label"] = ("Video _quality:", "_Kvalitet videa:"),
+            ["quality_aria"] = ("Video quality", "Kvalitet videa"),
+            ["q_best"] = ("Best available", "Najbolji dostupan"),
+            ["q_short_best"] = ("best", "najbolji"),
+            ["container_label"] = ("Video format:", "Format videa:"),
+            ["container_aria"] = ("Video format", "Format videa"),
+            ["container_mp4"] = ("MP4 (plays everywhere)", "MP4 (radi svuda)"),
+            ["container_mkv"] = ("MKV (highest quality, all streams)", "MKV (najviši kvalitet, svi tokovi)"),
+            ["container_webm"] = ("WebM", "WebM"),
+            ["audio_format_label"] = ("Audio format:", "Format zvuka:"),
+            ["audio_format_aria"] = ("Audio format", "Format zvuka"),
+            ["afmt_mp3"] = ("MP3 (plays everywhere)", "MP3 (radi svuda)"),
+            ["afmt_m4a"] = ("M4A / AAC", "M4A / AAC"),
+            ["afmt_opus"] = ("Opus (small, high quality)", "Opus (mali, kvalitetan)"),
+            ["afmt_flac"] = ("FLAC (lossless)", "FLAC (bez gubitka)"),
+            ["afmt_wav"] = ("WAV (uncompressed, for editing)", "WAV (nekompresovan, za montažu)"),
+            ["audioq_label"] = ("Audio _quality:", "Kvalitet zvu_ka:"),
+            ["audioq_aria"] = ("Audio quality", "Kvalitet zvuka"),
+            ["aq_0"] = ("Best (largest file)", "Najbolji (najveći fajl)"),
+            ["aq_320k"] = ("320 kbps", "320 kbps"),
+            ["aq_192k"] = ("192 kbps (recommended)", "192 kbps (preporučeno)"),
+            ["aq_128k"] = ("128 kbps (smaller file)", "128 kbps (manji fajl)"),
+            ["savefolder_label"] = ("_Save to folder:", "_Čuvaj u folder:"),
+            ["savefolder_aria"] = ("Destination folder", "Folder za preuzimanje"),
+            ["browse_btn"] = ("Browse...", "Pregledaj..."),
+            ["browse_title"] = ("Choose where to save downloaded files", "Izaberi gde da se čuvaju preuzeti fajlovi"),
+            ["open_btn"] = ("Open", "Otvori"),
+            ["open_btn_aria"] = ("Open the destination folder", "Otvori folder za preuzimanje"),
+            ["folder_set"] = ("Downloads now go to: {0}. Remembered.", "Preuzimanja sada idu u: {0}. Zapamćeno."),
+            ["err_open_folder"] = ("Could not open the folder: {0}", "Folder ne može da se otvori: {0}"),
 
-            en["url_label"]  = "YouTube URL (video or playlist):";
-            en["url_aria"]   = "YouTube URL — enter link to video or playlist";
-            en["url_help"]   = "Accepts a link to a single video or an entire playlist";
+            // Lista
+            ["queue_label"] = ("Download l_ist:", "L_ista za preuzimanje:"),
+            ["queue_aria"] = ("Download list", "Lista za preuzimanje"),
+            ["queue_help"] = ("Enter: options (or open the folder of a finished file). Delete: remove.", "Enter: opcije (ili otvori folder gotovog fajla). Delete: ukloni."),
+            ["btn_start_all"] = ("Download _all", "Preuzmi _sve"),
+            ["btn_stop"] = ("Sto_p", "Za_ustavi"),
+            ["btn_item_options"] = ("_Options for selected...", "Op_cije za izabrano..."),
+            ["btn_remove"] = ("_Remove selected", "Uklo_ni izabrano"),
+            ["btn_retry"] = ("Retr_y failed", "Ponovi neusp_ele"),
+            ["btn_clear_done"] = ("_Clear finished", "Očisti _gotove"),
+            ["progress_aria"] = ("Overall progress", "Ukupan napredak"),
 
-            en["filetype_group"] = "File type";
-            en["filetype_aria"]  = "File type selection";
-            en["video_option"]   = "Video (MP4)";
-            en["video_aria"]     = "Video, MP4 format";
-            en["audio_option"]   = "Audio (MP3)";
-            en["audio_aria"]     = "Audio, MP3 format";
+            ["st_checking"] = ("checking link", "proveravam link"),
+            ["st_ready"] = ("ready", "spremno"),
+            ["st_needs_choice"] = ("waiting for your choice", "čeka tvoj izbor"),
+            ["st_waiting"] = ("in queue", "u redu"),
+            ["st_downloading"] = ("downloading {0}%", "preuzimam {0}%"),
+            ["st_done"] = ("done", "gotovo"),
+            ["st_failed"] = ("failed", "nije uspelo"),
+            ["st_cancelled"] = ("stopped", "zaustavljeno"),
+            ["pl_name"] = ("{0} (playlist, {1} items)", "{0} (plejlista, {1} stavki)"),
+            ["pl_progress"] = ("{0} of {1}: {2}", "{0} od {1}: {2}"),
+            ["eta_left"] = ("{0} left", "još {0}"),
+            ["files_count"] = ("{0} files", "{0} fajlova"),
+            ["already_downloaded"] = ("already downloaded before", "već preuzeto ranije"),
+            ["info_unavailable"] = ("details not available ({0}), will try to download anyway", "podaci nisu dostupni ({0}), pokušaću ipak da preuzmem"),
 
-            en["quality_label"]  = "Video quality:";
-            en["quality_aria"]   = "Video quality selection";
-            en["q_best"]         = "Best available";
-            en["q_1080"]         = "1080p";
-            en["q_720"]          = "720p";
-            en["q_480"]          = "480p";
-            en["q_360"]          = "360p";
+            ["started_announce"] = ("Downloading: {0}", "Preuzimam: {0}"),
+            ["done_announce"] = ("Done: {0}", "Gotovo: {0}"),
+            ["failed_announce"] = ("Failed: {0} — {1}", "Nije uspelo: {0} — {1}"),
+            ["stopped_announce"] = ("Stopped: {0}", "Zaustavljeno: {0}"),
+            ["ready_announce"] = ("Ready: {0}. Press Download all to start.", "Spremno: {0}. Pritisni Preuzmi sve za početak."),
+            ["all_done"] = ("All done: {0} downloaded.", "Sve je gotovo: preuzeto {0}."),
+            ["all_done_with_errors"] = ("Finished: {0} downloaded, {1} failed. Retry failed tries them again.", "Završeno: preuzeto {0}, nije uspelo {1}. Ponovi neuspele pokušava ponovo."),
+            ["download_complete_title"] = ("Downloads finished", "Preuzimanje završeno"),
+            ["overall_status"] = ("{0} of {1} done. Now: {2}, {3}%", "Gotovo {0} od {1}. Sada: {2}, {3}%"),
+            ["overall_idle"] = ("{0} of {1} done.", "Gotovo {0} od {1}."),
+            ["starting_n"] = ("Starting {0} downloads.", "Pokrećem {0} preuzimanja."),
+            ["nothing_to_start"] = ("Nothing waiting to download.", "Nema ničeg što čeka preuzimanje."),
+            ["nothing_running"] = ("Nothing is downloading.", "Ništa se ne preuzima."),
+            ["stopping_selected"] = ("Stopping the selected download.", "Zaustavljam izabrano preuzimanje."),
+            ["stopping_all"] = ("Stopping all downloads.", "Zaustavljam sva preuzimanja."),
+            ["select_first"] = ("Select an item in the list first.", "Prvo izaberi stavku u listi."),
+            ["removed_n"] = ("{0} removed from the list.", "Uklonjeno iz liste: {0}."),
+            ["nothing_failed"] = ("Nothing failed.", "Nema neuspelih."),
+            ["retrying_n"] = ("Trying {0} again.", "Ponovo pokušavam: {0}."),
+            ["cleared_n"] = ("{0} finished items cleared.", "Očišćeno gotovih: {0}."),
+            ["options_none"] = ("Select an item that is not downloading or finished.", "Izaberi stavku koja se ne preuzima i nije gotova."),
+            ["options_applied"] = ("{0} items set to {1}.", "Stavki podešeno: {0}, na {1}."),
+            ["confirm_exit"] = ("Downloads are still running. Stop them and exit?", "Preuzimanja su još u toku. Zaustaviti ih i izaći?"),
+            ["update_wait"] = ("Wait until the current downloads finish, then update.", "Sačekaj da se završe trenutna preuzimanja, pa ažuriraj."),
 
-            en["audioq_label"] = "MP3 quality:";
-            en["audioq_aria"]  = "MP3 audio quality selection";
-            en["aq_best"]      = "Best (VBR, largest file)";
-            en["aq_320"]       = "320 kbps";
-            en["aq_192"]       = "192 kbps (recommended)";
-            en["aq_128"]       = "128 kbps (smaller file)";
+            // Greške i saveti
+            ["err_tools_missing"] = ("yt-dlp or FFmpeg is not installed.", "yt-dlp ili FFmpeg nije instaliran."),
+            ["err_unsupported"] = ("This site or link is not supported.", "Ovaj sajt ili link nije podržan."),
+            ["hint_cookies"] = ("Tip: Tools > Settings > Login can use your browser's sign-in.", "Savet: Alatke > Podešavanja > Prijava može da iskoristi prijavu iz tvog pregledača."),
+            ["hint_update"] = ("Tip: Tools > Update yt-dlp usually fixes this.", "Savet: Alatke > Ažuriraj yt-dlp obično rešava ovo."),
+            ["err_prefix"] = ("Error: {0}", "Greška: {0}"),
+            ["error_title"] = ("Error", "Greška"),
 
-            en["savefolder_label"] = "Save to folder:";
-            en["savefolder_aria"]  = "Destination folder for downloaded file";
-            en["browse_btn"]       = "Browse...";
-            en["browse_aria"]      = "Choose a different destination folder";
-            en["open_btn"]         = "Open";
-            en["open_btn_aria"]    = "Open the destination folder in File Explorer";
+            // Plejlista
+            ["playlist_dialog_title"] = ("Playlist", "Plejlista"),
+            ["playlist_dialog_text"] = ("This link is a playlist: {0} ({1} items). What do you want to download?", "Ovaj link je plejlista: {0} ({1} stavki). Šta želiš da preuzmeš?"),
+            ["scope_group"] = ("Playlist", "Plejlista"),
+            ["scope_single"] = ("Just this video", "Samo ovaj video"),
+            ["scope_all"] = ("The whole playlist", "Celu plejlistu"),
+            ["scope_choose"] = ("Choose items...", "Izaberi stavke..."),
+            ["scope_custom"] = ("Chosen items: {0}", "Izabrane stavke: {0}"),
+            ["tracks_aria"] = ("Playlist items — Space selects, several can be selected", "Stavke plejliste — Space bira, može više njih"),
+            ["choose_tracks_hint"] = ("Select one or more items in the list (Space), then OK.", "Izaberi jednu ili više stavki u listi (Space), pa U redu."),
+            ["err_select_track"] = ("Select at least one item.", "Izaberi bar jednu stavku."),
+            ["playlist_skipped"] = ("skipped", "preskočeno"),
+            ["btn_skip"] = ("_Skip this link", "_Preskoči ovaj link"),
 
-            en["playlist_prompt"]   = "This link is part of a playlist. What do you want to download?";
-            en["scope_group"]       = "Download scope";
-            en["scope_group_aria"]  = "Choose whether to download just this video, the entire playlist, or specific tracks";
-            en["scope_single"]      = "Just this video (ignore the rest of the playlist)";
-            en["scope_single_aria"] = "Just this video, ignore the rest of the playlist";
-            en["scope_all"]         = "Entire playlist";
-            en["scope_all_aria"]    = "Entire playlist";
-            en["scope_choose"]      = "Choose specific tracks...";
-            en["scope_choose_aria"] = "Choose specific tracks from the playlist";
-            en["tracks_aria"]       = "Playlist tracks — select one or more tracks to download";
-            en["choose_tracks_hint"]= "Select one or more tracks from the list to download only those.";
+            // Opcije stavke
+            ["item_options_title"] = ("Options", "Opcije"),
+            ["item_options_one"] = ("Options for: {0}", "Opcije za: {0}"),
+            ["item_options_many"] = ("Options for {0} selected items", "Opcije za {0} izabranih stavki"),
+            ["item_options_hint"] = ("Only these links change. The defaults for new links stay as they are.", "Menjaju se samo ovi linkovi. Podrazumevano za nove linkove ostaje kako jeste."),
 
-            en["progress_aria"] = "Download progress";
-            en["preparing"]     = "Preparing...";
-            en["cancelled"]     = "Cancelled.";
+            // Podešavanja
+            ["settings_title"] = ("Settings", "Podešavanja"),
+            ["settings_hint"] = ("Everything here is remembered.", "Sve ovde se pamti."),
+            ["settings_saved"] = ("Settings saved.", "Podešavanja sačuvana."),
+            ["set_playlists"] = ("Playlists", "Plejliste"),
+            ["set_playlist_policy"] = ("When a link is part of a playlist:", "Kad je link deo plejliste:"),
+            ["pol_ask"] = ("Ask me every time", "Pitaj me svaki put"),
+            ["pol_single"] = ("Download just that video", "Preuzmi samo taj video"),
+            ["pol_all"] = ("Download the whole playlist", "Preuzmi celu plejlistu"),
+            ["set_queue"] = ("Download list", "Lista za preuzimanje"),
+            ["set_autostart"] = ("Start downloading as soon as links are added", "Kreni sa preuzimanjem čim se linkovi dodaju"),
+            ["set_simultaneous"] = ("Downloads at the same time:", "Istovremenih preuzimanja:"),
+            ["set_message_done"] = ("Show a message when the whole list is finished", "Prikaži poruku kad se cela lista završi"),
+            ["set_open_done"] = ("Open the folder when the whole list is finished", "Otvori folder kad se cela lista završi"),
+            ["set_skip_downloaded"] = ("Skip videos that were already downloaded before", "Preskoči videe koji su već ranije preuzeti"),
+            ["set_files"] = ("File names and extras", "Imena fajlova i dodaci"),
+            ["set_naming"] = ("File name:", "Ime fajla:"),
+            ["name_title"] = ("Title", "Naslov"),
+            ["name_title_id"] = ("Title [video ID]", "Naslov [ID videa]"),
+            ["name_uploader_title"] = ("Channel - Title", "Kanal - Naslov"),
+            ["set_number"] = ("Number playlist items (01, 02, 03...)", "Numeriši stavke plejliste (01, 02, 03...)"),
+            ["set_playlist_folder"] = ("Put each playlist in its own folder", "Svaku plejlistu stavi u svoj folder"),
+            ["set_site_folder"] = ("Separate folder for each site (YouTube, TikTok...)", "Poseban folder za svaki sajt (YouTube, TikTok...)"),
+            ["set_thumbnail"] = ("Embed the cover image (thumbnail) in the file", "Ugradi sličicu (omot) u fajl"),
+            ["set_metadata"] = ("Embed title, artist and date in the file", "Ugradi naslov, izvođača i datum u fajl"),
+            ["set_subtitles"] = ("Subtitles (video only)", "Titlovi (samo za video)"),
+            ["set_subtitles_mode"] = ("Subtitles:", "Titlovi:"),
+            ["subs_off"] = ("Don't download", "Ne preuzimaj"),
+            ["subs_files"] = ("Save as separate .srt files", "Sačuvaj kao posebne .srt fajlove"),
+            ["subs_embed"] = ("Embed in the video", "Ugradi u video"),
+            ["set_sub_langs"] = ("Subtitle languages (comma separated, e.g. sr,hr,en):", "Jezici titlova (zarezom, npr. sr,hr,en):"),
+            ["set_auto_subs"] = ("Also use automatically generated subtitles", "Koristi i automatski generisane titlove"),
+            ["set_login"] = ("Login (Instagram, Facebook, private and age-restricted videos)", "Prijava (Instagram, Facebook, privatni i videi sa ograničenjem uzrasta)"),
+            ["set_cookies_hint"] = ("The app can use your sign-in from a browser. Firefox works best; Chrome and Edge may need to be closed while downloading.", "Program može da iskoristi tvoju prijavu iz pregledača. Firefox radi najbolje; Chrome i Edge će možda morati da budu zatvoreni dok traje preuzimanje."),
+            ["set_cookies"] = ("Use sign-in from:", "Koristi prijavu iz:"),
+            ["cookies_none"] = ("Don't use (default)", "Ne koristi (podrazumevano)"),
+            ["set_tools"] = ("Tools", "Alatke"),
+            ["set_auto_update"] = ("Update yt-dlp automatically once a week", "Automatski ažuriraj yt-dlp jednom nedeljno"),
 
-            en["btn_loadinfo"]         = "Load info";
-            en["btn_loadinfo_loading"] = "Loading...";
-            en["btn_loadinfo_aria"]    = "Load video or playlist information";
-            en["btn_download"]         = "Download";
-            en["btn_download_aria"]    = "Download video or audio";
-            en["btn_cancel"]           = "Cancel";
-            en["btn_cancel_aria"]      = "Cancel the current download";
+            // Alati
+            ["ytdlp_missing_title"] = ("yt-dlp not found", "yt-dlp nije pronađen"),
+            ["ytdlp_missing_msg"] = ("yt-dlp is a free tool that does the actual downloading.\n\nDownload it automatically now? (about 18 MB, one time)", "yt-dlp je besplatan alat koji obavlja samo preuzimanje.\n\nPreuzeti ga automatski sada? (oko 18 MB, jednom)"),
+            ["ytdlp_downloading"] = ("Downloading yt-dlp...", "Preuzimam yt-dlp..."),
+            ["ytdlp_ready"] = ("yt-dlp is ready.", "yt-dlp je spreman."),
+            ["ytdlp_install_fail"] = ("Unable to download yt-dlp: {0}\n\nYou can download it manually from https://github.com/yt-dlp/yt-dlp/releases", "yt-dlp ne može da se preuzme: {0}\n\nMožeš ga preuzeti ručno sa https://github.com/yt-dlp/yt-dlp/releases"),
+            ["updating_ytdlp"] = ("Updating yt-dlp...", "Ažuriram yt-dlp..."),
+            ["ytdlp_updated"] = ("yt-dlp is up to date: version {0}.", "yt-dlp je ažuran: verzija {0}."),
+            ["ffmpeg_missing_title"] = ("FFmpeg not found", "FFmpeg nije pronađen"),
+            ["ffmpeg_missing_msg"] = ("FFmpeg is a free tool needed to convert audio and join video with sound.\n\nDownload it automatically now? (about 90 MB, one time)", "FFmpeg je besplatan alat potreban za konverziju zvuka i spajanje slike i zvuka.\n\nPreuzeti ga automatski sada? (oko 90 MB, jednom)"),
+            ["ffmpeg_downloading"] = ("Downloading FFmpeg — this may take a few minutes...", "Preuzimam FFmpeg — može potrajati nekoliko minuta..."),
+            ["ffmpeg_extracting"] = ("Extracting FFmpeg...", "Raspakujem FFmpeg..."),
+            ["ffmpeg_ready"] = ("FFmpeg is ready.", "FFmpeg je spreman."),
+            ["ffmpeg_install_fail"] = ("Unable to install FFmpeg: {0}\n\nYou can also download a Windows build from https://www.gyan.dev/ffmpeg/builds/ and put ffmpeg.exe in:\n{1}", "FFmpeg ne može da se instalira: {0}\n\nMožeš i ručno da preuzmeš Windows verziju sa https://www.gyan.dev/ffmpeg/builds/ i staviš ffmpeg.exe u:\n{1}"),
+            ["deno_missing_title"] = ("Deno for YouTube", "Deno za YouTube"),
+            ["deno_missing_msg"] = ("YouTube now needs a small helper program (Deno) for reliable downloads in every quality. Without it some videos may download in lower quality or fail.\n\nDownload Deno automatically now? (about 45 MB, one time)", "YouTube sada traži mali pomoćni program (Deno) za pouzdano preuzimanje u svim kvalitetima. Bez njega neki videi mogu da se preuzmu u slabijem kvalitetu ili da ne uspeju.\n\nPreuzeti Deno automatski sada? (oko 45 MB, jednom)"),
+            ["deno_declined"] = ("OK, without Deno. You can install it any time from the Tools menu.", "U redu, bez Dena. Možeš ga instalirati bilo kad iz menija Alatke."),
+            ["deno_downloading"] = ("Downloading Deno...", "Preuzimam Deno..."),
+            ["deno_ready"] = ("Deno is ready.", "Deno je spreman."),
+            ["deno_already"] = ("Deno is already installed.", "Deno je već instaliran."),
+            ["deno_install_fail"] = ("Unable to install Deno: {0}", "Deno ne može da se instalira: {0}"),
 
-            en["err_url_empty"]        = "Error: URL field is empty.";
-            en["err_prefix"]           = "Error: {0}";
-            en["err_ytdlp_not_found"]  = "yt-dlp not found.";
-            en["err_ytdlp_not_found_after_install"] = "yt-dlp not found even after installation.";
-            en["err_ffmpeg_not_found_after_install"] = "FFmpeg not found even after installation.";
-            en["err_no_response"]      = "No response from yt-dlp. Check the URL.";
-            en["err_download_no_files"]= "Download finished but no files were found.";
-            en["err_select_track"]     = "Please select at least one track from the list, or choose \"Entire playlist\"";
-            en["err_select_track_or_single"] = " or \"Just this video\".";
-            en["err_select_track_period"]    = ".";
-            en["err_open_folder"]      = "Could not open the folder: {0}";
-            en["err_during_download"]  = "Error during download: {0}";
+            // Podrška
+            ["menu_support"] = ("How to support this _project", "Kako podržati p_rojekat"),
+            ["support_title"] = ("How to support Ultra YouTube Downloader", "Kako podržati Ultra YouTube Downloader"),
+            ["btn_how_support"] = ("How to support", "Kako podržati"),
+            ["btn_open_sponsors"] = ("Open GitHub Sponsors", "Otvori GitHub Sponsors"),
+            ["btn_copy_link"] = ("Copy the link", "Kopiraj link"),
+            ["link_copied"] = ("Link copied.", "Link je kopiran."),
+            ["support_text"] = (
+                "Ultra YouTube Downloader is free and will stay free. If it helps you and you would like to support its development, you can do it through GitHub Sponsors:\n{0}\n\n" +
+                "YOU DON'T NEED PAYPAL\nGitHub Sponsors is paid with an ordinary payment card — Visa or Mastercard, credit or debit (the card from your bank account works too). PayPal is not used at all.\n\n" +
+                "STEP BY STEP\n" +
+                "1. Press \"Open GitHub Sponsors\" below (or open the link above in your browser).\n" +
+                "2. Sign in to GitHub. If you don't have an account, create one — it is free and takes a minute (e-mail and password).\n" +
+                "3. Choose a monthly amount, or switch to a one-time payment if you want to give only once.\n" +
+                "4. Enter your card details and confirm. Your bank may ask you to confirm the payment in its app or with a code by SMS.\n\n" +
+                "Monthly support can be cancelled at any time in your GitHub settings (Settings > Billing and licensing).\n\n" +
+                "You can also help for free: tell others about the app, report problems, or give the project a star on GitHub.\n\nThank you!",
+                "Ultra YouTube Downloader je besplatan i takav će i ostati. Ako ti pomaže i želiš da podržiš njegov razvoj, to možeš preko GitHub Sponsors:\n{0}\n\n" +
+                "NE TREBA TI PAYPAL\nGitHub Sponsors se plaća običnom platnom karticom — Visa ili Mastercard, kreditnom ili debitnom (radi i kartica sa tvog tekućeg računa). PayPal se uopšte ne koristi.\n\n" +
+                "KORAK PO KORAK\n" +
+                "1. Pritisni dugme \"Otvori GitHub Sponsors\" ispod (ili otvori link iznad u pregledaču).\n" +
+                "2. Prijavi se na GitHub. Ako nemaš nalog, napravi ga — besplatno je i traje minut (mejl i lozinka).\n" +
+                "3. Izaberi mesečni iznos, ili prebaci na jednokratnu uplatu ako želiš da daš samo jednom.\n" +
+                "4. Upiši podatke sa kartice i potvrdi. Banka će možda tražiti da plaćanje potvrdiš u njenoj aplikaciji ili kodom iz SMS poruke.\n\n" +
+                "Mesečnu podršku možeš da otkažeš kad god hoćeš u podešavanjima GitHub naloga (Settings > Billing and licensing).\n\n" +
+                "Možeš da pomogneš i besplatno: preporuči program drugima, prijavi problem ili daj projektu zvezdicu na GitHub-u.\n\nHvala!"),
 
-            en["playlist_found_specific"] = "This link is part of a playlist: {0}, {1} videos. Defaulting to just this video — a \"Download scope\" option below lets you switch to the entire playlist or pick specific tracks.";
-            en["playlist_found_generic"]  = "Playlist found: {0}, {1} videos. A \"Download scope\" option below lets you download the whole playlist or pick specific tracks.";
-            en["video_found"]             = "Video found: {0}, duration {1}.";
-            en["info_playlist_title"]     = "🎵 Playlist: {0}  ({1} videos)";
-            en["info_video_title"]        = "🎬 {0}";
-            en["info_meta_playlist"]      = "Channel: {0}";
-            en["info_meta_video"]         = "Channel: {0}   Duration: {1}";
-
-            en["downloading_file"]       = "Downloading: {0}";
-            en["download_complete_file"] = "Download complete: {0}";
-            en["download_cancelled"]     = "Download cancelled.";
-            en["ytdlp_error"]            = "yt-dlp error: {0}";
-
-            en["download_complete_title"]   = "Download complete";
-            en["saved_to"]                  = "Saved to: {0}";
-            en["saved_multi"]               = "Saved {0} file(s) to: {1}";
-            en["download_complete_announce"]= "Download complete. {0}.";
-
-            en["ytdlp_missing_title"] = "yt-dlp not found";
-            en["ytdlp_missing_msg"]   = "yt-dlp not found on this system.\n\nYt-dlp is a free tool required for downloading from YouTube.\n\nWould you like to download it automatically? (~10 MB, one time)";
-            en["ffmpeg_missing_title"]= "FFmpeg not found";
-            en["ffmpeg_missing_msg"]  = "FFmpeg not found on this system.\n\nFFmpeg is a free tool required to convert audio to MP3 and to merge video/audio streams.\n\nWould you like to download it automatically? (~80 MB, one time)";
-            en["ffmpeg_install_fail"] = "Unable to install FFmpeg: {0}\n\nYou can also install it manually: download a Windows build from https://www.gyan.dev/ffmpeg/builds/ and place ffmpeg.exe in:\n{1}";
-            en["ytdlp_install_fail"]  = "Unable to download yt-dlp: {0}\n\nDownload manually from: https://github.com/yt-dlp/yt-dlp/releases";
-            en["ytdlp_downloading"]   = "Downloading yt-dlp, please wait...";
-            en["ytdlp_downloaded"]    = "yt-dlp downloaded successfully.";
-            en["ytdlp_ready"]         = "yt-dlp ready.";
-            en["ffmpeg_downloading"]  = "Downloading FFmpeg, please wait — this file is larger, it may take a few minutes...";
-            en["ffmpeg_extracting"]   = "Extracting FFmpeg...";
-            en["ffmpeg_installed"]    = "FFmpeg installed successfully.";
-            en["ffmpeg_ready"]        = "FFmpeg ready.";
-
-            en["error_title"]   = "Error";
-            en["about_title"]   = "About Ultra YouTube Downloader";
-            en["about_text"]    = "Ultra YouTube Downloader {0}\n\nPart of the Ultra Creative Suite.\nDownload video or audio from YouTube — accessible for JAWS and NVDA.\n\nCreated by Demir Ajvazi.";
-
-            en["theme_announce"]    = "Theme: {0}";
-            en["textsize_announce"] = "Text size: {0}";
-            en["language_announce"] = "Language: {0}";
-
-            _translations["en"] = en;
-
-            // ==================== SRPSKI (latinica) ====================
-            var sr = new Dictionary<string, string>();
-
-            sr["window_title"]      = "Ultra YouTube Downloader";
-            sr["window_aria"]       = "Ultra YouTube Downloader — preuzmite video ili audio sa YouTube-a";
-            sr["app_subtitle"]      = "Preuzmi video (MP4) ili audio (MP3) sa YouTube linka.";
-            sr["status_by"]         = "autor: Demir Ajvazi";
-
-            sr["menu_view"]         = "_Prikaz";
-            sr["menu_theme"]        = "Tema";
-            sr["theme_dark"]        = "_Tamna (podrazumevano)";
-            sr["theme_light"]       = "_Svetla";
-            sr["theme_contrast"]    = "_Visok kontrast";
-            sr["theme_dark_plain"]     = "Tamna";
-            sr["theme_light_plain"]    = "Svetla";
-            sr["theme_contrast_plain"] = "Visok kontrast";
-            sr["menu_textsize"]     = "Veličina teksta";
-            sr["text_larger"]       = "_Uvećaj tekst (Ctrl +)";
-            sr["text_smaller"]      = "_Umanji tekst (Ctrl -)";
-            sr["text_reset"]        = "_Podrazumevana veličina (Ctrl 0)";
-            sr["menu_language"]     = "_Jezik";
-            sr["lang_en"]           = "_Engleski";
-            sr["lang_sr"]           = "_Srpski";
-            sr["menu_open_folder"]  = "_Otvori odredišni folder";
-            sr["menu_help"]         = "_Pomoć";
-            sr["menu_about"]        = "_O aplikaciji Ultra YouTube Downloader";
-            sr["menu_view_aria"]    = "Meni Prikaz";
-            sr["menu_help_aria"]    = "Meni Pomoć";
-            sr["menu_language_aria"]= "Meni Jezik";
-            sr["larger_text_aria"]  = "Uvećaj tekst i kontrole";
-            sr["smaller_text_aria"] = "Umanji tekst i kontrole";
-            sr["reset_text_aria"]   = "Vrati podrazumevanu veličinu teksta i kontrola";
-            sr["open_folder_menu_aria"] = "Otvorite odredišni folder u Windows Explorer-u";
-            sr["about_aria"]        = "O aplikaciji Ultra YouTube Downloader";
-            sr["theme_dark_aria"]      = "Tamna tema";
-            sr["theme_light_aria"]     = "Svetla tema";
-            sr["theme_contrast_aria"]  = "Tema visokog kontrasta";
-            sr["lang_en_aria"]      = "Promeni jezik na engleski";
-            sr["lang_sr_aria"]      = "Promeni jezik na srpski";
-
-            sr["url_label"]  = "YouTube URL (video ili plejlista):";
-            sr["url_aria"]   = "YouTube URL — unesite link ka videu ili plejlisti";
-            sr["url_help"]   = "Prihvata link ka pojedinačnom videu ili celoj plejlisti";
-
-            sr["filetype_group"] = "Tip fajla";
-            sr["filetype_aria"]  = "Izbor tipa fajla";
-            sr["video_option"]   = "Video (MP4)";
-            sr["video_aria"]     = "Video, MP4 format";
-            sr["audio_option"]   = "Audio (MP3)";
-            sr["audio_aria"]     = "Audio, MP3 format";
-
-            sr["quality_label"]  = "Kvalitet videa:";
-            sr["quality_aria"]   = "Izbor kvaliteta videa";
-            sr["q_best"]         = "Najbolji dostupan";
-            sr["q_1080"]         = "1080p";
-            sr["q_720"]          = "720p";
-            sr["q_480"]          = "480p";
-            sr["q_360"]          = "360p";
-
-            sr["audioq_label"] = "MP3 kvalitet:";
-            sr["audioq_aria"]  = "Izbor MP3 kvaliteta";
-            sr["aq_best"]      = "Najbolji (VBR, najveći fajl)";
-            sr["aq_320"]       = "320 kbps";
-            sr["aq_192"]       = "192 kbps (preporučeno)";
-            sr["aq_128"]       = "128 kbps (manji fajl)";
-
-            sr["savefolder_label"] = "Sačuvaj u folder:";
-            sr["savefolder_aria"]  = "Odredišni folder za preuzeti fajl";
-            sr["browse_btn"]       = "Izaberi...";
-            sr["browse_aria"]      = "Izaberite drugi odredišni folder";
-            sr["open_btn"]         = "Otvori";
-            sr["open_btn_aria"]    = "Otvorite odredišni folder u Windows Explorer-u";
-
-            sr["playlist_prompt"]   = "Ovaj link je deo plejliste. Šta želite da preuzmete?";
-            sr["scope_group"]       = "Obim preuzimanja";
-            sr["scope_group_aria"]  = "Izaberite da li preuzimate samo ovaj video, celu plejlistu, ili određene numere";
-            sr["scope_single"]      = "Samo ovaj video (zanemari ostatak plejliste)";
-            sr["scope_single_aria"] = "Samo ovaj video, zanemari ostatak plejliste";
-            sr["scope_all"]         = "Cela plejlista";
-            sr["scope_all_aria"]    = "Cela plejlista";
-            sr["scope_choose"]      = "Biram numere...";
-            sr["scope_choose_aria"] = "Izaberite određene numere iz plejliste";
-            sr["tracks_aria"]       = "Numere iz plejliste — izaberite jednu ili više numera za preuzimanje";
-            sr["choose_tracks_hint"]= "Izaberite jednu ili više numera sa liste da biste preuzeli samo njih.";
-
-            sr["progress_aria"] = "Napredak preuzimanja";
-            sr["preparing"]     = "Priprema...";
-            sr["cancelled"]     = "Otkazano.";
-
-            sr["btn_loadinfo"]         = "Učitaj informacije";
-            sr["btn_loadinfo_loading"] = "Učitavanje...";
-            sr["btn_loadinfo_aria"]    = "Učitajte informacije o videu ili plejlisti";
-            sr["btn_download"]         = "Preuzmi";
-            sr["btn_download_aria"]    = "Preuzmite video ili audio";
-            sr["btn_cancel"]           = "Otkaži";
-            sr["btn_cancel_aria"]      = "Otkažite trenutno preuzimanje";
-
-            sr["err_url_empty"]        = "Greška: polje za URL je prazno.";
-            sr["err_prefix"]           = "Greška: {0}";
-            sr["err_ytdlp_not_found"]  = "yt-dlp nije pronađen.";
-            sr["err_ytdlp_not_found_after_install"] = "yt-dlp nije pronađen ni posle instalacije.";
-            sr["err_ffmpeg_not_found_after_install"] = "FFmpeg nije pronađen ni posle instalacije.";
-            sr["err_no_response"]      = "Nema odgovora od yt-dlp. Proverite URL.";
-            sr["err_download_no_files"]= "Preuzimanje je završeno, ali fajlovi nisu pronađeni.";
-            sr["err_select_track"]     = "Izaberite bar jednu numeru sa liste, ili izaberite „Cela plejlista“";
-            sr["err_select_track_or_single"] = " ili „Samo ovaj video“.";
-            sr["err_select_track_period"]    = ".";
-            sr["err_open_folder"]      = "Nije moguće otvoriti folder: {0}";
-            sr["err_during_download"]  = "Greška prilikom preuzimanja: {0}";
-
-            sr["playlist_found_specific"] = "Ovaj link je deo plejliste: {0}, {1} video(a). Podrazumevano je izabrano samo ovaj video — opcija „Obim preuzimanja“ ispod ti omogućava da izabereš celu plejlistu ili određene numere.";
-            sr["playlist_found_generic"]  = "Pronađena je plejlista: {0}, {1} video(a). Opcija „Obim preuzimanja“ ispod ti omogućava da preuzmeš celu plejlistu ili određene numere.";
-            sr["video_found"]             = "Video pronađen: {0}, trajanje {1}.";
-            sr["info_playlist_title"]     = "🎵 Plejlista: {0}  ({1} video(a))";
-            sr["info_video_title"]        = "🎬 {0}";
-            sr["info_meta_playlist"]      = "Kanal: {0}";
-            sr["info_meta_video"]         = "Kanal: {0}   Trajanje: {1}";
-
-            sr["downloading_file"]       = "Preuzimanje: {0}";
-            sr["download_complete_file"] = "Preuzimanje završeno: {0}";
-            sr["download_cancelled"]     = "Preuzimanje otkazano.";
-            sr["ytdlp_error"]            = "yt-dlp greška: {0}";
-
-            sr["download_complete_title"]   = "Preuzimanje završeno";
-            sr["saved_to"]                  = "Sačuvano u: {0}";
-            sr["saved_multi"]               = "Sačuvano {0} fajl(ova) u: {1}";
-            sr["download_complete_announce"]= "Preuzimanje završeno. {0}.";
-
-            sr["ytdlp_missing_title"] = "yt-dlp nije pronađen";
-            sr["ytdlp_missing_msg"]   = "yt-dlp nije pronađen na ovom sistemu.\n\nYt-dlp je besplatan alat neophodan za preuzimanje sa YouTube-a.\n\nDa li želite da ga automatski preuzmete? (~10 MB, jednokratno)";
-            sr["ffmpeg_missing_title"]= "FFmpeg nije pronađen";
-            sr["ffmpeg_missing_msg"]  = "FFmpeg nije pronađen na ovom sistemu.\n\nFFmpeg je besplatan alat neophodan za konverziju audija u MP3 i spajanje video/audio zapisa.\n\nDa li želite da ga automatski preuzmete? (~80 MB, jednokratno)";
-            sr["ffmpeg_install_fail"] = "Nije moguće instalirati FFmpeg: {0}\n\nMožete ga instalirati i ručno: preuzmite Windows verziju sa https://www.gyan.dev/ffmpeg/builds/ i stavite ffmpeg.exe u:\n{1}";
-            sr["ytdlp_install_fail"]  = "Nije moguće preuzeti yt-dlp: {0}\n\nPreuzmite ručno sa: https://github.com/yt-dlp/yt-dlp/releases";
-            sr["ytdlp_downloading"]   = "Preuzimam yt-dlp, sačekajte...";
-            sr["ytdlp_downloaded"]    = "yt-dlp je uspešno preuzet.";
-            sr["ytdlp_ready"]         = "yt-dlp je spreman.";
-            sr["ffmpeg_downloading"]  = "Preuzimam FFmpeg, sačekajte — ovaj fajl je veći, može potrajati par minuta...";
-            sr["ffmpeg_extracting"]   = "Raspakivanje FFmpeg-a...";
-            sr["ffmpeg_installed"]    = "FFmpeg je uspešno instaliran.";
-            sr["ffmpeg_ready"]        = "FFmpeg je spreman.";
-
-            sr["error_title"]   = "Greška";
-            sr["about_title"]   = "O aplikaciji Ultra YouTube Downloader";
-            sr["about_text"]    = "Ultra YouTube Downloader {0}\n\nDeo Ultra Creative Suite-a.\nPreuzmi video ili audio sa YouTube-a — prilagođeno za JAWS i NVDA.\n\nAutor: Demir Ajvazi.";
-
-            sr["theme_announce"]    = "Tema: {0}";
-            sr["textsize_announce"] = "Veličina teksta: {0}";
-            sr["language_announce"] = "Jezik: {0}";
-
-            _translations["sr"] = sr;
-        }
+            // Ostalo
+            ["btn_ok"] = ("OK", "U redu"),
+            ["btn_cancel"] = ("Cancel", "Otkaži"),
+            ["btn_close"] = ("Close", "Zatvori"),
+            ["theme_announce"] = ("Theme: {0}", "Tema: {0}"),
+            ["textsize_announce"] = ("Text size: {0}", "Veličina teksta: {0}"),
+            ["language_announce"] = ("Language: {0}", "Jezik: {0}"),
+            ["about_title"] = ("About Ultra YouTube Downloader", "O programu Ultra YouTube Downloader"),
+            ["about_text"] = ("Ultra YouTube Downloader {0}\n\nDownload video or audio from YouTube and 1000+ other sites — one link or a whole list at once. Made for the keyboard and screen readers, and just as comfortable with a mouse.\n\nPowered by yt-dlp and FFmpeg.\nCreated by Demir Ajvazi. License: GPL-3.0.\n\nYou can support the project with an ordinary payment card — see Help > How to support this project.",
+                              "Ultra YouTube Downloader {0}\n\nPreuzimanje videa ili zvuka sa YouTube-a i još preko 1000 sajtova — jedan link ili cela lista odjednom. Napravljen za tastaturu i čitače ekrana, a podjednako udoban i mišem.\n\nRadi uz yt-dlp i FFmpeg.\nAutor: Demir Ajvazi. Licenca: GPL-3.0.\n\nProjekat možeš da podržiš običnom platnom karticom — pogledaj Pomoć > Kako podržati projekat."),
+            ["shortcuts_text"] = (
+                "LINKS\nEnter  Add the links to the list\nShift+Enter  New line in the links box\nCtrl+Shift+V  Add links from the clipboard (from anywhere in the window)\n\n" +
+                "DOWNLOAD LIST\nEnter  Options for the item (on a finished item: open its folder)\nDelete  Remove the item\nCtrl+A  Select all items\n\n" +
+                "OTHER\nCtrl+,  Settings\nCtrl+  /  Ctrl-  /  Ctrl+0  Text size\nF1  This list\n\nEverything else is in the menus (Alt). Underlined letters jump to fields with Alt+letter.",
+                "LINKOVI\nEnter  Dodaj linkove u listu\nShift+Enter  Novi red u polju za linkove\nCtrl+Shift+V  Dodaj linkove iz klipborda (sa bilo kog mesta u prozoru)\n\n" +
+                "LISTA ZA PREUZIMANJE\nEnter  Opcije stavke (na gotovoj stavci: otvori njen folder)\nDelete  Ukloni stavku\nCtrl+A  Izaberi sve stavke\n\n" +
+                "OSTALO\nCtrl+,  Podešavanja\nCtrl+  /  Ctrl-  /  Ctrl+0  Veličina teksta\nF1  Ova lista\n\nSve ostalo je u menijima (Alt). Podvučena slova vode do polja sa Alt+slovo."),
+        };
 
         public static string GetText(string key, string language = "en")
         {
-            if (_translations.TryGetValue(language, out var dict) && dict.TryGetValue(key, out var value))
-                return value;
-
-            if (_translations["en"].TryGetValue(key, out var fallback))
-                return fallback;
-
-            return key;
+            if (!T.TryGetValue(key, out var v)) return key;
+            return language == "sr" ? v.sr : v.en;
         }
     }
 }

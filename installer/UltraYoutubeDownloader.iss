@@ -4,7 +4,9 @@
 ; ISCC.exe installer\UltraYoutubeDownloader.iss  (pokretati iz root foldera repo-a)
 
 #define MyAppName "Ultra YouTube Downloader"
-#define MyAppVersion "1.0.0"
+#ifndef MyAppVersion
+  #define MyAppVersion "2.0.0"
+#endif
 #define MyAppPublisher "Demir Ajvazi"
 #define MyAppExeName "UltraYoutubeDownloader.exe"
 #define MyAppURL "https://github.com/demirajvazi10-max/UltraYoutubeDownloader"
