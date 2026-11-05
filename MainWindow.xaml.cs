@@ -840,24 +840,13 @@ namespace UltraYoutubeDownloader
             catch { }
         }
 
-        private const string SponsorsUrl = "https://github.com/sponsors/demirajvazi10-max";
-
         private void MnuAbout_Click(object sender, RoutedEventArgs e) =>
             new TextWindow(this, L("about_title"), string.Format(L("about_text"), GetAppVersion()), L,
                 (L("btn_how_support"), () => MnuSupport_Click(this, new RoutedEventArgs()))).ShowDialog();
 
-        /// <summary>Kako podržati projekat: korak po korak, sa naglaskom da se plaća običnom karticom (PayPal nije potreban).</summary>
+        /// <summary>Kako podržati projekat: zajednički prozor svih Ultra programa (tekući račun, Ko-fi karticom, GitHub Sponsors).</summary>
         private void MnuSupport_Click(object sender, RoutedEventArgs e) =>
-            new TextWindow(this, L("support_title"), string.Format(L("support_text"), SponsorsUrl), L,
-                (L("btn_open_sponsors"), () =>
-                {
-                    try { Process.Start(new ProcessStartInfo(SponsorsUrl) { UseShellExecute = true }); }
-                    catch (Exception ex) { ShowError(string.Format(L("err_prefix"), ex.Message)); }
-                }),
-                (L("btn_copy_link"), () =>
-                {
-                    try { Clipboard.SetText(SponsorsUrl); Announce(L("link_copied")); } catch { }
-                })).ShowDialog();
+            UltraSupport.SupportInfo.Show(this, "Ultra YouTube Downloader", _currentLanguage == "sr");
 
         private void MnuExit_Click(object sender, RoutedEventArgs e) => Close();
 

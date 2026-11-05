@@ -235,30 +235,7 @@ namespace UltraYoutubeDownloader
 
             // Podrška
             ["menu_support"] = ("How to support this _project", "Kako podržati p_rojekat"),
-            ["support_title"] = ("How to support Ultra YouTube Downloader", "Kako podržati Ultra YouTube Downloader"),
             ["btn_how_support"] = ("How to support", "Kako podržati"),
-            ["btn_open_sponsors"] = ("Open GitHub Sponsors", "Otvori GitHub Sponsors"),
-            ["btn_copy_link"] = ("Copy the link", "Kopiraj link"),
-            ["link_copied"] = ("Link copied.", "Link je kopiran."),
-            ["support_text"] = (
-                "Ultra YouTube Downloader is free and will stay free. If it helps you and you would like to support its development, you can do it through GitHub Sponsors:\n{0}\n\n" +
-                "YOU DON'T NEED PAYPAL\nGitHub Sponsors is paid with an ordinary payment card — Visa or Mastercard, credit or debit (the card from your bank account works too). PayPal is not used at all.\n\n" +
-                "STEP BY STEP\n" +
-                "1. Press \"Open GitHub Sponsors\" below (or open the link above in your browser).\n" +
-                "2. Sign in to GitHub. If you don't have an account, create one — it is free and takes a minute (e-mail and password).\n" +
-                "3. Choose a monthly amount, or switch to a one-time payment if you want to give only once.\n" +
-                "4. Enter your card details and confirm. Your bank may ask you to confirm the payment in its app or with a code by SMS.\n\n" +
-                "Monthly support can be cancelled at any time in your GitHub settings (Settings > Billing and licensing).\n\n" +
-                "You can also help for free: tell others about the app, report problems, or give the project a star on GitHub.\n\nThank you!",
-                "Ultra YouTube Downloader je besplatan i takav će i ostati. Ako ti pomaže i želiš da podržiš njegov razvoj, to možeš preko GitHub Sponsors:\n{0}\n\n" +
-                "NE TREBA TI PAYPAL\nGitHub Sponsors se plaća običnom platnom karticom — Visa ili Mastercard, kreditnom ili debitnom (radi i kartica sa tvog tekućeg računa). PayPal se uopšte ne koristi.\n\n" +
-                "KORAK PO KORAK\n" +
-                "1. Pritisni dugme \"Otvori GitHub Sponsors\" ispod (ili otvori link iznad u pregledaču).\n" +
-                "2. Prijavi se na GitHub. Ako nemaš nalog, napravi ga — besplatno je i traje minut (mejl i lozinka).\n" +
-                "3. Izaberi mesečni iznos, ili prebaci na jednokratnu uplatu ako želiš da daš samo jednom.\n" +
-                "4. Upiši podatke sa kartice i potvrdi. Banka će možda tražiti da plaćanje potvrdiš u njenoj aplikaciji ili kodom iz SMS poruke.\n\n" +
-                "Mesečnu podršku možeš da otkažeš kad god hoćeš u podešavanjima GitHub naloga (Settings > Billing and licensing).\n\n" +
-                "Možeš da pomogneš i besplatno: preporuči program drugima, prijavi problem ili daj projektu zvezdicu na GitHub-u.\n\nHvala!"),
 
             // Ostalo
             ["btn_ok"] = ("OK", "U redu"),
@@ -268,8 +245,8 @@ namespace UltraYoutubeDownloader
             ["textsize_announce"] = ("Text size: {0}", "Veličina teksta: {0}"),
             ["language_announce"] = ("Language: {0}", "Jezik: {0}"),
             ["about_title"] = ("About Ultra YouTube Downloader", "O programu Ultra YouTube Downloader"),
-            ["about_text"] = ("Ultra YouTube Downloader {0}\n\nDownload video or audio from YouTube and 1000+ other sites — one link or a whole list at once. Made for the keyboard and screen readers, and just as comfortable with a mouse.\n\nPowered by yt-dlp and FFmpeg.\nCreated by Demir Ajvazi. License: GPL-3.0.\n\nYou can support the project with an ordinary payment card — see Help > How to support this project.",
-                              "Ultra YouTube Downloader {0}\n\nPreuzimanje videa ili zvuka sa YouTube-a i još preko 1000 sajtova — jedan link ili cela lista odjednom. Napravljen za tastaturu i čitače ekrana, a podjednako udoban i mišem.\n\nRadi uz yt-dlp i FFmpeg.\nAutor: Demir Ajvazi. Licenca: GPL-3.0.\n\nProjekat možeš da podržiš običnom platnom karticom — pogledaj Pomoć > Kako podržati projekat."),
+            ["about_text"] = ("Ultra YouTube Downloader {0}\n\nDownload video or audio from YouTube and 1000+ other sites — one link or a whole list at once. Made for the keyboard and screen readers, and just as comfortable with a mouse.\n\nPowered by yt-dlp and FFmpeg.\nCreated by Demir Ajvazi. License: GPL-3.0.\n\nYou can support the project by card, no account needed — see Help > How to support this project.",
+                              "Ultra YouTube Downloader {0}\n\nPreuzimanje videa ili zvuka sa YouTube-a i još preko 1000 sajtova — jedan link ili cela lista odjednom. Napravljen za tastaturu i čitače ekrana, a podjednako udoban i mišem.\n\nRadi uz yt-dlp i FFmpeg.\nAutor: Demir Ajvazi. Licenca: GPL-3.0.\n\nProjekat možeš da podržiš uplatom na tekući račun ili platnom karticom — pogledaj Pomoć > Kako podržati projekat."),
             ["shortcuts_text"] = (
                 "LINKS\nEnter  Add the links to the list\nShift+Enter  New line in the links box\nCtrl+Shift+V  Add links from the clipboard (from anywhere in the window)\n\n" +
                 "DOWNLOAD LIST\nEnter  Options for the item (on a finished item: open its folder)\nDelete  Remove the item\nCtrl+A  Select all items\n\n" +

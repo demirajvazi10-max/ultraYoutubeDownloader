@@ -9,18 +9,18 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<AssemblyName>UltraYoutubeDownloader</AssemblyName>
 		<RootNamespace>UltraYoutubeDownloader</RootNamespace>
-		<!-- Isto mesto kao u UltraVideoEditor.csproj — jedino koje treba promeniti
+		<!-- Isto mesto kao u UltraVideoEditor.csproj â€” jedino koje treba promeniti
 		     pre svakog GitHub release-a/tag-a. MainWindow.xaml.cs -> GetAppVersion()
-		     čita ovu vrednost u runtime-u za naslov prozora i About dijalog. -->
-		<Version>2.0.0</Version>
+		     Äita ovu vrednost u runtime-u za naslov prozora i About dijalog. -->
+		<Version>2.0.1</Version>
 		<Authors>Demir Ajvazi</Authors>
 		<Company>Demir Ajvazi</Company>
 		<Product>Ultra YouTube Downloader</Product>
-		<Copyright>© Demir Ajvazi</Copyright>
+		<Copyright>Â© Demir Ajvazi</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- UseWindowsForms (samo zbog FolderBrowserDialog-a) bi inače dodao globalne
+		<!-- UseWindowsForms (samo zbog FolderBrowserDialog-a) bi inaÄe dodao globalne
 		     "using System.Windows.Forms/System.Drawing" u svaki fajl, pa bi Button,
 		     TextBox, Label, ComboBox... bili dvosmisleni sa WPF-ovim. WinForms se
 		     koristi samo preko aliasa WinForms u MainWindow.xaml.cs. -->
